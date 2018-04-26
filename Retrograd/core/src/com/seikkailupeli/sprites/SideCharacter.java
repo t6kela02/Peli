@@ -21,34 +21,17 @@ public class SideCharacter extends Sprite {
     public enum State{STANDING, WALKINGUP, WALKINGDOWN, WALKINGRIGHT, WALKINGLEFT}
     public State currentState;
     private State previousState;
-    private State previousDirection;
-    private State currentDirection;
     private float stateTimer;
-    private boolean walkingup = false;
-    private boolean walkingdown = false;
-    private boolean walkingright = false;
-    private boolean walkingleft = false;
 
-    private Texture imgEteen;
-    private Texture imgTaakse;
-    private Texture imgOikealle;
-    private Texture imgVasemmalle;
-    private Texture imgTest;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingUp;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingDown;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingRight;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingLeft;
     private TextureRegion playerStanding;
     private TextureRegion playerStandingUp;
-    private TextureRegion playerStandingDown;
     private TextureRegion playerStandingRight;
     private TextureRegion playerStandingLeft;
-    private TextureRegion[] standFrames;
-    private TextureRegion[] animationFrames;
-    private TextureRegion[] upFrames;
-    private TextureRegion[] downFrames;
-    private TextureRegion[] rightFrames;
-    private TextureRegion[] leftFrames;
+
     public World world;
     public Body b2body;
     float elapsedTime;
@@ -312,7 +295,7 @@ public class SideCharacter extends Sprite {
     }
 
     public void dispose(){
-        imgEteen.dispose();
+
     }
 
 

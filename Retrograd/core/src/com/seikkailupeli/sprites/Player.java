@@ -19,34 +19,21 @@ public class Player extends Sprite {
     public enum State{STANDING, WALKINGUP, WALKINGDOWN, WALKINGRIGHT, WALKINGLEFT}
     private State currentState;
     private State previousState;
-    private State previousDirection;
-    private State currentDirection;
     private float stateTimer;
-    private boolean walkingup = false;
-    private boolean walkingdown = false;
-    private boolean walkingright = false;
-    private boolean walkingleft = false;
 
     private Texture imgEteen;
     private Texture imgTaakse;
     private Texture imgOikealle;
     private Texture imgVasemmalle;
-    private Texture imgTest;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingUp;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingDown;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingRight;
     private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> walkingLeft;
     private TextureRegion playerStanding;
     private TextureRegion playerStandingUp;
-    private TextureRegion playerStandingDown;
     private TextureRegion playerStandingRight;
     private TextureRegion playerStandingLeft;
-    private TextureRegion[] standFrames;
-    private TextureRegion[] animationFrames;
-    private TextureRegion[] upFrames;
-    private TextureRegion[] downFrames;
-    private TextureRegion[] rightFrames;
-    private TextureRegion[] leftFrames;
+
     public World world;
     public Body b2body;
     float elapsedTime;
@@ -184,7 +171,7 @@ public class Player extends Sprite {
 
     public void update(float dt){
 
-        //animation.update(dt);
+
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         elapsedTime += dt;
         setRegion(getFrame(dt));
@@ -289,6 +276,9 @@ public class Player extends Sprite {
 
     public void dispose(){
         imgEteen.dispose();
+        imgTaakse.dispose();
+        imgOikealle.dispose();
+        imgVasemmalle.dispose();
     }
 
 

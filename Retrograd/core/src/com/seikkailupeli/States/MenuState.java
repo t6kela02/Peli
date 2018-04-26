@@ -139,7 +139,7 @@ public class MenuState extends State{
         playButton.setPosition(680,350);
         exitButton.setPosition(0,900);
         settingsButton.setPosition(1750,900);
-        stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
+        stage.act(Gdx.graphics.getDeltaTime());
         //stage.draw();
 
     }
@@ -147,6 +147,7 @@ public class MenuState extends State{
     @Override
     public void dispose() {
         backround.dispose();
+        stage.dispose();
         SoundManager.dispose();
     }
 }

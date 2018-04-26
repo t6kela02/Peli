@@ -74,7 +74,7 @@ public class MenuSettingsState extends  State {
         sb.end();
 
         playButton.setPosition(80,870);
-        stage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
+        stage.act(Gdx.graphics.getDeltaTime());
         //stage.draw();
 
     }

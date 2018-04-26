@@ -53,12 +53,11 @@ public class Seikkailupeli extends State implements InputProcessor{
 	private int currentPuzzleId;
 	private int monologId = 0;
 
-	private float playerAnimationTime;
+
 	private float randomSpawnTime;
 	private float randomSpawnInterval;
 	private float dialogTime = 0;
 
-	private boolean playerAnimationRunning = false;
 
 	private boolean drawObjectEnabled = true;
 	private boolean tilemapEnabled = false;
@@ -113,7 +112,6 @@ public class Seikkailupeli extends State implements InputProcessor{
 	private Texture ruuviTexture;
 	private Texture avainKultaTexture;
 	private Texture avainHarmaaTexture;
-	private Texture taloTexture;
 
 	private SideCharacter sideCharacter1;
 	private SideCharacter sideCharacter2;
@@ -237,30 +235,9 @@ public class Seikkailupeli extends State implements InputProcessor{
 		ruuviTexture = new Texture(Gdx.files.internal("ruuvi.png"));
 		avainKultaTexture = new Texture(Gdx.files.internal("avainkulta.png"));
 		avainHarmaaTexture = new Texture(Gdx.files.internal("avainharmaa.png"));
-		taloTexture = new Texture(Gdx.files.internal("talo.png"));
 
 		spriteBatch = new SpriteBatch();
-		//playerAnimationStateTime = 0f;
-		//animationSheet = new Texture(Gdx.files.internal("animation_sheet.png"));
 
-		/*TextureRegion[][] tmp = TextureRegion.split(animationSheet,
-				animationSheet.getWidth() / FRAME_COLS,
-				animationSheet.getHeight() / FRAME_ROWS);
-
-
-		TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		int index = 0;
-		for (int i = 0; i < FRAME_ROWS; i++) {
-			for (int j = 0; j < FRAME_COLS; j++) {
-				walkFrames[index++] = tmp[i][j];
-			}
-		}
-
-		// Initialize the player Animation with the frame interval and array of frames
-		animation = new Animation<TextureRegion>(playerAnimationSpeed, walkFrames);
-
-		spriteBatch = new SpriteBatch();
-		playerAnimationStateTime = 0f;*/
 
 		System.out.println("CREATE 5");
 		
@@ -366,16 +343,7 @@ public class Seikkailupeli extends State implements InputProcessor{
 			}
 
 
-			/*if (playerAnimationRunning) {
-				playerAnimationStateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
-			}
 
-			playerAnimationTime += Gdx.graphics.getDeltaTime();
-
-			if (playerAnimationTime > 0.2f) {
-				playerAnimationRunning = false;
-				playerAnimationStateTime = 0.025f;
-			}*/
 
 			if (enableRandomSpawns) {
 				if (randomMaxItems > randomItemsOnMap) {
@@ -402,6 +370,7 @@ public class Seikkailupeli extends State implements InputProcessor{
 		}
 
 		if (!puzzleRunning) {
+			//piirretään törmäysalueet
 			//b2dr.render(world,camera.combined);
 		}
 
@@ -415,7 +384,7 @@ public class Seikkailupeli extends State implements InputProcessor{
 			pickableItemList.add (new PickableItem("Oh come on, eat your hot dogs. It smells good.", syotyHodariTexture, 5380, 3920));
 			pickableItemList.add (new PickableItem("A severed hoof, looks like a job of a professional butcher.", hevosenKavioTexture,1664, 1024));
 			pickableItemList.add (new PickableItem("What a sturdy stool, I could sit on this for hours!", jakkaraTexture, 2912, 2240));
-			pickableItemList.add (new PickableItem("Just a piece of cloth. Nothing too special.", revennytKangasTexture, 3072, 768));
+			pickableItemList.add (new PickableItem("Just a piece of cloth. Nothing too special.", revennytKangasTexture, 3072, 1250));
 			pickableItemList.add (new PickableItem("I wonder if this is a spare screw. I really feel like I should hold on to this…", ruuviTexture,1664, 1664));
 			pickableItemList.add (new PickableItem("Oh a key, I hope nobody needs this because It’s mine now.", avainKultaTexture, 10520, 10640));
 			//pickableItemList.add (new PickableItem("Oh a key, I hope nobody needs this because It’s mine now.", avainHarmaaTexture, 1792, 1792));
@@ -461,8 +430,10 @@ public class Seikkailupeli extends State implements InputProcessor{
 			tiledMapLayerRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("Backround"));
 			tiledMapLayerRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("Backround2"));
 		}
+
 		//batch.begin();
 
+		//player
 		tiledMapLayerRenderer.getBatch().draw(player.getPlayerTexture(Gdx.graphics.getDeltaTime()),player.getPosition().x-40,player.getPosition().y-30,Gdx.graphics.getWidth()/8/3,Gdx.graphics.getHeight()/8);
 
 		for (int i = 0; i <= 5; i++) {
@@ -477,15 +448,16 @@ public class Seikkailupeli extends State implements InputProcessor{
 			}
 		}
 
-		if (drawPuzzleObjects) {
+		//piirretään teleportin alueet asettelua varten
+		/*if (drawPuzzleObjects) {
 			for (int i = 0; i < puzzleList.size(); i++) {
 				if (!puzzleList.get(i).checkIsCorrect()) {
-					//tiledMapLayerRenderer.getBatch().draw(puzzleList.get(i).getItemTexture(), puzzleList.get(i).getItemCoordinateX(), puzzleList.get(i).getItemCoordinateY());
+					tiledMapLayerRenderer.getBatch().draw(puzzleList.get(i).getItemTexture(), puzzleList.get(i).getItemCoordinateX(), puzzleList.get(i).getItemCoordinateY());
 				}
-				//tiledMapLayerRenderer.getBatch().draw(puzzleList.get(i).getTeleportAreaTexture(), puzzleList.get(i).getTeleport1Coordinates()[0], puzzleList.get(i).getTeleport1Coordinates()[1]);
-				//tiledMapLayerRenderer.getBatch().draw(puzzleList.get(i).getTeleportAreaTexture(), puzzleList.get(i).getTeleport2Coordinates()[0], puzzleList.get(i).getTeleport2Coordinates()[1]);
+				tiledMapLayerRenderer.getBatch().draw(puzzleList.get(i).getTeleportAreaTexture(), puzzleList.get(i).getTeleport1Coordinates()[0], puzzleList.get(i).getTeleport1Coordinates()[1]);
+				tiledMapLayerRenderer.getBatch().draw(puzzleList.get(i).getTeleportAreaTexture(), puzzleList.get(i).getTeleport2Coordinates()[0], puzzleList.get(i).getTeleport2Coordinates()[1]);
 			}
-		}
+		}*/
 
 
 			if (drawCharacters) {
@@ -996,10 +968,12 @@ public class Seikkailupeli extends State implements InputProcessor{
 		ruuviTexture.dispose();
 		avainKultaTexture.dispose();
 		avainHarmaaTexture.dispose();
-		taloTexture.dispose();
 		item1.dispose();
 		item2.dispose();
 		tiledMap.dispose();
+		player.dispose();
+		sideCharacter1.dispose();
+		sideCharacter2.dispose();
 	}
 
 }
