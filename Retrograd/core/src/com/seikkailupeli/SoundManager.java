@@ -21,7 +21,5 @@ public class SoundManager {
 
     public static void dispose(){
         music.dispose();
-        walkSound.dispose();
-        lockKlick.dispose();
     }
 }
